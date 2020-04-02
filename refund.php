@@ -55,26 +55,6 @@ $comm = $data['comm'];
 $totalDelegatedBip = GetStatusPage()->totalDelegatedBip;
 $numberOfBlocks = GetStatusPage()->numberOfBlocks;
 
-class Reward extends SQLite3
-{
-    function __construct()
-    {
-        $this->open(explode('public_html', $_SERVER['DOCUMENT_ROOT'])[0] . 'config/refund/'.$from.'.sqlite');
-    }
-}
-
-function getBlockByHash ($api,$hash)
-{
-    $api = new MinterAPI($api);
-    return $api->getTransaction($hash);
-}
-
-function TransactoinSendDebug ($api,$transaction)
-{
-    $api = new MinterAPI($api);
-    return $api->send($transaction);
-}
-
 $db = new Reward();
 
 $data = $db->query('SELECT * FROM "'.$from.'"')->fetchArray(1);
