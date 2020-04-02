@@ -1,7 +1,7 @@
 <?php
 $array_node = array(
 	array(
-	'from' => 'bipmaker',
+	'from' => 'bipmaker', //сокращенное название. Без пробелов и только латиница
 	'node_key' => 'Mpaaaa175f44e40e31d0f16fc05fc65e5802dcdf40fe897dd762076d633bc1aaaa',
 	'name' => 'BipMakerPRO node',
 	'comm' => 6
