@@ -20,8 +20,8 @@ function GetBlocks()
 	$jsonCalled = $json['data'][0];
 	return json_decode(json_encode($jsonCalled));
 }
-//$db = new Reward();
-class Reward extends SQLite3
+//$db = new Refund();
+class Refund extends SQLite3
 {
     function __construct()
     {

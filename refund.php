@@ -23,7 +23,7 @@ $comm = $data['comm'];
 $totalDelegatedBip = GetStatusPage()->totalDelegatedBip;
 $numberOfBlocks = GetStatusPage()->numberOfBlocks;
 
-$db = new Reward();
+$db = new Refund();
 
 $data = $db->query('SELECT * FROM "'.$from.'"')->fetchArray(1);
 
