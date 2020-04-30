@@ -93,5 +93,4 @@ if ($code == 0) {
 	   echo "Ревард уже был уплачен в блоке $block <br><br>
 		Следующий Reward будет уплачен после блока $block_reward<br><br>";
    }
-sleep(6);
 }
