@@ -46,7 +46,7 @@ if ($block_reward <= $numberOfBlocks)
 		$estimateCoinBuy = $api->estimateCoinSell('BIP', '1000000000000000000', $coin, null);
 		$will_get = $estimateCoinBuy->result->will_get/10 ** 18;
 		
-		$tx_reward = array();
+		$tx_array = array();
 
 		for($i = 0; $i <= $count; $i++) 
 			{
@@ -63,7 +63,7 @@ if ($block_reward <= $numberOfBlocks)
 										'to' => $address,
 										'value' => $value
 									);
-						array_push($tx_reward, $tx_rew);
+						array_push($tx_array, $tx_rew);
 											
 					}
 			}
@@ -72,33 +72,21 @@ if ($block_reward <= $numberOfBlocks)
 								'to' => 'Mxaa9a68f11241eb18deff762eac316e2ccac22a03',
 								'value' => 0
 							); //заглушка с нулевым value.
-		array_push($tx_reward, $tx_rew);
+		array_push($tx_array, $tx_rew);
 
 		$text = "🐈 MINTERCAT: $name $comm% commission refund. @MinterCat"; //текст payload
 
-		$api = new MinterAPI($api2);
+$api = 'https://api.minter.one';
 
-		$tx = new MinterTx([
-							'nonce' => $api->getNonce($address_refund),
-							'chainId' => MinterTx::MAINNET_CHAIN_ID,
-							'gasPrice' => 1,
-							'gasCoin' => $coin,
-							'type' => MinterMultiSendTx::TYPE,
-							'data' => [
-								'list' => $tx_reward
-							],
-							'payload' => $text,
-							'serviceData' => '',
-							'signatureType' => MinterTx::SIGNATURE_SINGLE_TYPE
-						]);
-
-		$transaction = $tx->sign($privat_key); 
-		echo $transaction;
-		$get_hesh = TransactoinSendDebug($api2,$transaction);
-		$hash = "0x".$get_hesh->result->hash;
-		$db->query('UPDATE "'.$from.'" SET numberOfhash = "'.$hash.'"');
-		$bot_key = 'refund';
-		include('bot/RefundMinterBot/RefundMinterBot.php'); //бот сообщает о выплате в группе.
+$transaction = TransactionSend($api,$address,$privat_key,$chainId = 1,$gasCoin = 'BIP',$text = '',$tx_array);
+$hash = $transaction->hash;
+$code = $transaction->code;
+if ($code == 0) {
+	echo 'transaction send';
+	$db->query('UPDATE "'.$from.'" SET numberOfhash = "'.$hash.'"');
+	$bot_key = 'refund';
+	include('bot/RefundMinterBot/RefundMinterBot.php'); //бот сообщает о выплате в группе.
+	} else {echo 'transaction error';}
 	}}
    else
    {
